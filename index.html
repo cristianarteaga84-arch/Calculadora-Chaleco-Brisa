@@ -98,7 +98,7 @@
 
   <div class="input-group">
     <label for="muestra">1. Puntos en 10 cm de tu muestra:</label>
-    <input type="number" id="muestra" placeholder="Ej: 20" inputmode="numeric">
+    <input type="number" id="muestra" placeholder="Ej: 19" inputmode="numeric">
   </div>
 
   <div class="input-group">
@@ -130,10 +130,13 @@
       return;
     }
 
-    let totalBase = Math.round((largo * muestra) / 10);
+    // Paso 1: Regla de tres para el total base
+    let totalBase = (largo * muestra) / 10;
+    
+    // Paso 2: Restar los puntos del elástico para aislar el cuerpo
     let cuerpo = totalBase - elastico;
 
-    // Ajuste según el múltiplo del Chaleco Brisa (Múltiplo de 4)
+    // Paso 3: Ajustar el cuerpo al múltiplo de 4 más cercano
     let resto = cuerpo % 4;
     if (resto !== 0) {
       if (resto >= 2) {
@@ -142,11 +145,14 @@
         cuerpo -= resto;
       }
     }
+    // Asegurar que no quede negativo
+    if (cuerpo < 0) cuerpo = 0;
 
+    // Paso 4: Sumar otra vez los puntos del elástico
     let puntosTotales = cuerpo + elastico;
 
     document.getElementById('puntosFinales').innerText = `✨ Tenés que montar: ${puntosTotales} puntos`;
-    document.getElementById('detalle').innerText = `(Cuerpo: ${cuerpo} puntos, múltiplo de 4 + ${elastico} puntos de elástico).`;
+    document.getElementById('detalle').innerText = `(Cuerpo: ${cuerpo} puntos ajustado a múltiplo de 4 + ${elastico} puntos de elástico).`;
     document.getElementById('resultado').style.display = 'block';
   }
 </script>
