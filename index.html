@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Chaleco Brisa - Romi Tejidos</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fce4ec;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      margin: 0;
+    }
+    .card {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    h1 {
+      color: #ad1457;
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+    .badge {
+      background-color: #f8bbd0;
+      color: #880e4f;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+    .input-group {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 5px;
+      color: #444;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #f8bbd0;
+      border-radius: 10px;
+      box-sizing: border-box;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      background-color: #ad1457;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .result-box {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8bbd0;
+      border-radius: 12px;
+      display: none;
+    }
+    .result-box h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #880e4f;
+    }
+    .result-box p {
+      margin: 5px 0 0 0;
+      font-size: 13px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>🧶 Romi Tejidos</h1>
+  <span class="badge">Exclusiva para: Chaleco Brisa</span>
+
+  <div class="input-group">
+    <label for="muestra">1. Puntos en 10 cm de tu muestra:</label>
+    <input type="number" id="muestra" placeholder="Ej: 20" inputmode="numeric">
+  </div>
+
+  <div class="input-group">
+    <label for="largo">2. Centímetros de largo deseado:</label>
+    <input type="number" id="largo" placeholder="Ej: 44" inputmode="numeric">
+  </div>
+
+  <div class="input-group">
+    <label for="elastico">3. Puntos para el elástico:</label>
+    <input type="number" id="elastico" placeholder="Ej: 12" inputmode="numeric">
+  </div>
+
+  <button onclick="calcular()">CALCULAR PUNTOS</button>
+
+  <div id="resultado" class="result-box">
+    <h2 id="puntosFinales">88 PUNTOS</h2>
+    <p id="detalle"></p>
+  </div>
+</div>
+
+<script>
+  function calcular() {
+    const muestra = parseFloat(document.getElementById('muestra').value);
+    const largo = parseFloat(document.getElementById('largo').value);
+    const elastico = parseFloat(document.getElementById('elastico').value);
+
+    if (!muestra || !largo || isNaN(elastico)) {
+      alert("Por favor completa todos los campos.");
+      return;
+    }
+
+    let totalBase = Math.round((largo * muestra) / 10);
+    let cuerpo = totalBase - elastico;
+
+    // Ajuste según el múltiplo del Chaleco Brisa (Múltiplo de 4)
+    let resto = cuerpo % 4;
+    if (resto !== 0) {
+      if (resto >= 2) {
+        cuerpo += (4 - resto);
+      } else {
+        cuerpo -= resto;
+      }
+    }
+
+    let puntosTotales = cuerpo + elastico;
+
+    document.getElementById('puntosFinales').innerText = `✨ Tenés que montar: ${puntosTotales} puntos`;
+    document.getElementById('detalle').innerText = `(Cuerpo: ${cuerpo} puntos, múltiplo de 4 + ${elastico} puntos de elástico).`;
+    document.getElementById('resultado').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
